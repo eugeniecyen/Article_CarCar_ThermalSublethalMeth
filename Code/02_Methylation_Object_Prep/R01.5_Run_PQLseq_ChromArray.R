@@ -51,9 +51,8 @@ Num_cores = args[2]
 ####### Load custom function ######
 
 # The original package function uses detectCores() to set no. of cores to parallelise by
-# This caused job to take use too many cores and set off ITS node alarms, as it ignores how many cores you set as NSLOTS...
-# https://www.jottr.org/2022/12/05/avoid-detectcores/ 
-# Solution: load in custom function with no. of cores set to Num_cores variable, which is set at top of this script from args[2]
+# This caused job to take use too many cores and set off ITS node alarms, as it ignores how many cores you set as NSLOTS
+# Solution for now: load in custom function with no. of cores hard coded
 
 source("/data/SBCS-EizaguirreLab/Turtle_WGBS/00_Scripts/Functions/Custom_PQLseq_Function.R")
 
@@ -88,8 +87,8 @@ head(coverage_df)
 print(paste0("No. of rows: ", nrow(coverage_df)))
 
 # Subset rows for testing
-numCs_df <- numCs_df[1:100,]
-coverage_df <- coverage_df[1:100,]
+# numCs_df <- numCs_df[1:100,]
+# coverage_df <- coverage_df[1:100,]
 
 # Load genetic relatedness matrix
 relatedness_mat <- read.table(file.path(DIR_PQL, "Evol_Apps_ALL_Theoretical_Relatedness_Matrix.txt"))
@@ -97,7 +96,7 @@ relatedness_mat <- read.table(file.path(DIR_PQL, "Evol_Apps_ALL_Theoretical_Rela
 print("Head of relatedness matrix:")
 head(relatedness_mat)
 
-print("##### Creating Phenotypes vector #####")
+print("##### Adding Phenotypes vector #####")
 treatment.no <- read.table(file.path(DIR_PQL, "Phenotypes_Input_Treatment.txt"), header = F)
 
 print("Phenotypes:")
