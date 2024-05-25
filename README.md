@@ -24,19 +24,21 @@ Raw sequencing reads are available on ENA under study accession PRJEB75968
 <br/><br/>
 ### Data
 
+**Metadata_Hatchlings_Reloc3.xlsx**: Experiment metadata for the 40 hatchlings included in this study
+
 **EvolApps_ALL_filt_CtoT_Intersect_GlobalMeth_Per_Ind.csv**: Global methylation counts per hatchling
 
-**EvolApps_WholeGenome_ALL_DMS_PQLseq_10pc_q0.05_no0q.RDS**: All 287 DMS identified via PQLSeq from sites present in all individuals (q<0.05, meth. difference > 10%)
+**Evol_Apps_PQLseq_Kinship_Matrix.txt**: Input relatedness matrix between hatchlings for PQLseq
+
+**EvolApps_WholeGenome_ALL_DMS_PQLseq_10pc_q0.05_no0q.RDS**: methylKit methylDiff object of 287 DMS identified via PQLseq from sites present in all individuals (q<0.05, meth. difference > 10%)
+
+**EvolApps_WholeGenome_uniteCovDM_ALL_PQLSeq_10pc_q0.05_no0q.RDS**: methylKit methylBase object of coverage and no. of methylated bases per individual at 287 DMS
 
 **EvolApps_WholeGenome_PercMethMatrix_ALL_CandidateDMS_Revised.csv**: Matrix of % methylation per hatchling at 29 DMS of interest (meth. difference >20%)
 
-**EvolApps_WholeGenome_uniteCovDM_ALL_PQLSeq_10pc_q0.05_no0q.RDS**: methylKit methylBase object with coverage and no. of methylated bases per individual at 287 DMS
-
-**Metadata_Hatchlings_Reloc3.xlsx**: Experiment metadata for the 40 hatchlings included in this study
+**Reloc3_NestLevelData_WithTemperatureInfo_NERCExp2021.csv**: Clutch-level data of hatching success and incubation temperature
 
 **Reloc3_Hatchling_Fitness_NERC_Exp_2021_WithPatrolDates_WithIDs_T.csv**: Hatchling-level phenotypic data, with clutch-level data attached
-
-**Reloc3_NestLevelData_WithTemperatureInfo_NERCExp2021.csv**: Clutch-level data of hatching success and incubation temperature
 <br/><br/>
 ### File structure
 
@@ -72,6 +74,7 @@ Raw sequencing reads are available on ENA under study accession PRJEB75968
 │       └── Phenotypic_Stats.R
 ├── Data
 │   ├── EvolApps_ALL_filt_CtoT_Intersect_GlobalMeth_Per_Ind.csv
+│   ├── Evol_Apps_PQLseq_Kinship_Matrix.txt
 │   ├── EvolApps_WholeGenome_ALL_DMS_PQLseq_10pc_q0.05_no0q.RDS
 │   ├── EvolApps_WholeGenome_PercMethMatrix_ALL_CandidateDMS_Revised.csv
 │   ├── EvolApps_WholeGenome_uniteCovDM_ALL_PQLSeq_10pc_q0.05_no0q.RDS
