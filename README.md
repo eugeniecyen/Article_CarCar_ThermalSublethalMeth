@@ -10,7 +10,7 @@ Preprint: https://doi.org/10.1101/2023.11.22.568239
 
 Raw sequencing reads are available on ENA under study accession PRJEB75968
 <br/><br/>
-## Summary of contents
+## Contents
 
 ### Code
 
@@ -21,7 +21,7 @@ Raw sequencing reads are available on ENA under study accession PRJEB75968
 **03_Downstream_Methylation_Analysis**: Scripts for downstream methylation analyses and plots (clustering, functional annotation, global methylation counts and GO enrichment analyses)
 
 **04_Phenotypic_Analysis**: Scripts for statistical tests for associations with phenotypic fitness-related traits at the clutch-level and individual, hatchling-level
-
+<br/><br/>
 ### Data
 
 **EvolApps_ALL_filt_CtoT_Intersect_GlobalMeth_Per_Ind.csv**: Global methylation counts per hatchling
@@ -38,7 +38,7 @@ Raw sequencing reads are available on ENA under study accession PRJEB75968
 
 **Reloc3_NestLevelData_WithTemperatureInfo_NERCExp2021.csv**: Clutch-level data of hatching success and incubation temperature
 <br/><br/>
-## File structure
+### File structure
 
 ```
 .
