@@ -30,15 +30,15 @@ Raw sequencing reads are available on ENA under study accession PRJEB75968
 
 **Evol_Apps_PQLseq_Kinship_Matrix.txt**: Input relatedness matrix between hatchlings for PQLseq
 
-**EvolApps_WholeGenome_ALL_DMS_PQLseq_10pc_q0.05_no0q.RDS**: methylKit methylDiff object of 287 DMS identified via PQLseq from sites present in all individuals (q<0.05, meth. difference > 10%)
+**EvolApps_WholeGenome_ALL_DMS_PQLseq_10pc_q0.05_no0q.RDS**: methylKit methylDiff object of 287 DMS identified via PQLseq from sites present in all hatchlings (q<0.05, meth. difference > 10%)
 
-**EvolApps_WholeGenome_uniteCovDM_ALL_PQLSeq_10pc_q0.05_no0q.RDS**: methylKit methylBase object of coverage and no. of methylated bases per individual at 287 DMS
+**EvolApps_WholeGenome_uniteCovDM_ALL_PQLSeq_10pc_q0.05_no0q.RDS**: methylKit methylBase object of coverage and no. of methylated bases per hatchling at 287 DMS
 
 **EvolApps_WholeGenome_PercMethMatrix_ALL_CandidateDMS_Revised.csv**: Matrix of % methylation per hatchling at 29 DMS of interest (meth. difference >20%)
 
 **Reloc3_NestLevelData_WithTemperatureInfo_NERCExp2021.csv**: Clutch-level data of hatching success and incubation temperature
 
-**Reloc3_Hatchling_Fitness_NERC_Exp_2021_WithPatrolDates_WithIDs_T.csv**: Hatchling-level phenotypic data, with clutch-level data attached
+**Reloc3_Hatchling_Fitness_NERC_Exp_2021_WithPatrolDates_WithIDs_T.csv**: Individual-level phenotypic data for all 408 hatchlings, with clutch-level data attached
 <br/><br/>
 ### File structure
 
