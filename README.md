@@ -24,7 +24,7 @@ Raw sequencing reads are available on ENA under study accession PRJEB75968
 <br/><br/>
 ### Data
 
-**Metadata_Hatchlings_Reloc3.xlsx**: Experiment metadata for the 40 hatchlings included in this study
+**Metadata_Hatchlings_Reloc3.xlsx**: Experiment metadata for the 40 hatchlings that were sequenced with WGBS in this study
 
 **EvolApps_ALL_filt_CtoT_Intersect_GlobalMeth_Per_Ind.csv**: Global methylation counts per hatchling
 
