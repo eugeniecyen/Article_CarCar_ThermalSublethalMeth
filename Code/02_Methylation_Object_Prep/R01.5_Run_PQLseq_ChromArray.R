@@ -74,13 +74,13 @@ print(paste0("##### Starting chromosome ", chr, " at ", Sys.time(), " #####"))
 print("##### Reading files #####")
 
 # Load methylation count input files
-numCs_df <- readRDS(file.path(DIR_CHROM, paste0("PQLseq_Input_NumCs_CountTransform1_SLK063_ragtag_chr", chr, ".RDS" )))
+numCs_df <- readRDS(file.path(DIR_CHROM, paste0("PQLseq_Input_NumCs_SLK063_ragtag_chr", chr, ".RDS" )))
 
 print("Head of numCs_df:")
 head(numCs_df)
 print(paste0("No. of rows: ", nrow(numCs_df)))
 
-coverage_df <- readRDS(file.path(DIR_CHROM, paste0("PQLseq_Input_Coverage_CountTransform2_SLK063_ragtag_chr", chr, ".RDS" )))
+coverage_df <- readRDS(file.path(DIR_CHROM, paste0("PQLseq_Input_Coverage_SLK063_ragtag_chr", chr, ".RDS" )))
 
 print("Head of coverage_df:")
 head(coverage_df)
@@ -114,7 +114,7 @@ print(paste0("No. of rows: ", nrow(fit)))
 
 ### Save ###
 print("##### Saving #####")
-saveRDS(fit, file.path(DIR_FIT, paste0("PQLseq_fit_transform_chr", chr, ".RDS")))
+saveRDS(fit, file.path(DIR_FIT, paste0("PQLseq_fit_chr", chr, ".RDS")))
 
 print(paste0("Saved fit table to: ", DIR_FIT))
 
