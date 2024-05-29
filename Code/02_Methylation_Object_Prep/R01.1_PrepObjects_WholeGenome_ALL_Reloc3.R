@@ -89,10 +89,6 @@ temp = list.files(path=dataPath,
 
 # Subset list for only sample IDs that match those in metadata
 temp <- temp[ grep(pattern=paste(metadata$Sample, collapse = "|"), x = temp) ]
-# James' explanation for why you need to use collapse="|": 
-# When you want to grep multiple things you use | to separate like bash (e.g. "Fogo|BoaVista"). 
-# When the things you want to search are in a vector or variable, if you grep df$var, I think it greps the whole thing. 
-# But to grep all of the things in the vector one at a time, you collapse (= separate) with | and it treats them separately
 
 # Check correct files are included in list
 print("No. of files:")
