@@ -24,7 +24,7 @@ library(limma)
 
 ####### Set directories ######
 
-CHROM_DIR <- "/data/SBCS-EizaguirreLab/Turtle_WGBS/05_MethylKit/04_Evol_Apps_Project/01_Working/02_MethylKit_Objects/02_PQLseq_Objects/Output_PQLseq/By_Chrom/Transform"
+CHROM_DIR <- "/data/SBCS-EizaguirreLab/Turtle_WGBS/05_MethylKit/04_Evol_Apps_Project/01_Working/02_MethylKit_Objects/02_PQLseq_Objects/Output_PQLseq/By_Chrom"
 PQL_DIR <- "/data/SBCS-EizaguirreLab/Turtle_WGBS/05_MethylKit/04_Evol_Apps_Project/01_Working/02_MethylKit_Objects/02_PQLseq_Objects/Output_PQLseq"
 MDIFF_DIR <- "/data/SBCS-EizaguirreLab/Turtle_WGBS/05_MethylKit/04_Evol_Apps_Project/01_Working/02_MethylKit_Objects/02_MethDiff_Objects"
 DMS_DIR <- "/data/SBCS-EizaguirreLab/Turtle_WGBS/05_MethylKit/04_Evol_Apps_Project/01_Working/02_MethylKit_Objects/03_DMS_Objects"
@@ -59,7 +59,7 @@ for (chr in chroms) {
 df_AllChrms <- do.call(rbind, List_dfs_fit)
 
 # % of NaNs for h2
-length(df_AllChrms$h2[grep("NaN", df_AllChrms$h2)])/nrow(df_AllChrms)*100 # 17.3% are NaNs, 49.8% for transformed
+length(df_AllChrms$h2[grep("NaN", df_AllChrms$h2)])/nrow(df_AllChrms)*100
 
 # For some reason, chr<n> has been added to start of every row name again -> remove
 # rownames(df_AllChrms) <- gsub("^.*?\\.","", rownames(df_AllChrms)) # Remove everything before first period
@@ -241,7 +241,7 @@ hist(slim_output$pvalue)
 hist(slim_output$qvalue)
 
 # Save
-saveRDS(slim_output, file.path(PQL_DIR, "PQLseq_Fit_Transform_SLIM_Corrected_Whole_Genome.RDS"))
+saveRDS(slim_output, file.path(PQL_DIR, "PQLseq_Fit_SLIM_Corrected_Whole_Genome.RDS"))
 
 
 ########################################################################################################################################
