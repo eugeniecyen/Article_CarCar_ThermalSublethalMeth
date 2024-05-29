@@ -56,14 +56,14 @@ PrepNumCsFun <- function(list_of_dfs) {
     list_of_dfs[[i]] <- list_of_dfs[[i]] %>% rename_with(~str_remove(., "^numCs"))
     colnames(list_of_dfs[[i]]) <- paste0("ind", colnames(list_of_dfs[[i]]))
     
-    # Save row names for adding back in, as transformation step removes them (if performing)
-    row_names <- rownames(list_of_dfs[[i]])
+    # # Save row names for adding back in, as transformation step removes them (if performing)
+    # row_names <- rownames(list_of_dfs[[i]])
     
     # # If doing count transformation: add +1 to the no. of methylated reads for every value
     # list_of_dfs[[i]] <- as.data.frame(lapply(list_of_dfs[[i]], function(x) if(is.numeric(x)) x + 1 else x))
     
-    # Add row names back in
-    rownames(list_of_dfs[[i]]) <- row_names
+    # # Add row names back in
+    # rownames(list_of_dfs[[i]]) <- row_names
   }
   return(list_of_dfs)
 }
@@ -88,14 +88,14 @@ PrepCoverageFun <- function(list_of_dfs) {
     list_of_dfs[[i]] <- list_of_dfs[[i]] %>% rename_with(~str_remove(., "coverage"))
     colnames(list_of_dfs[[i]]) <- paste0("ind", colnames(list_of_dfs[[i]]))
     
-    # Save row names for adding back in, as next step removes them
+    # # Save row names for adding back in, as next step removes them
     row_names <- rownames(list_of_dfs[[i]])
     
     # # If doing count transformation: add +2 to the no. of reads for every value
     # list_of_dfs[[i]] <- as.data.frame(lapply(list_of_dfs[[i]], function(x) if(is.numeric(x)) x + 2 else x))
     
-    # Add row names back in
-    rownames(list_of_dfs[[i]]) <- row_names
+    # # Add row names back in
+    # rownames(list_of_dfs[[i]]) <- row_names
   }
   return(list_of_dfs)
 }
@@ -145,7 +145,7 @@ list_chr_df_numCs <- PrepNumCsFun(list_chr_df_numCs)
 
 # Save each to separate RDS
 lapply(names(list_chr_df_numCs), function(i)
-  saveRDS(list_chr_df_numCs[[i]], file.path(DIR_CHROM, paste0("PQLseq_Input_NumCs_CountTransform1_", i , ".RDS"))))
+  saveRDS(list_chr_df_numCs[[i]], file.path(DIR_CHROM, paste0("PQLseq_Input_NumCs_", i , ".RDS"))))
 
 
 ####### 2) Prep LibSize input file ######
@@ -158,6 +158,6 @@ list_chr_df_coverage <- PrepCoverageFun(list_chr_df_coverage)
 
 # Save each to separate RDS
 lapply(names(list_chr_df_coverage), function(i)
-  saveRDS(list_chr_df_coverage[[i]], file.path(DIR_CHROM, paste0("PQLseq_Input_Coverage_CountTransform2_", i , ".RDS"))))
+  saveRDS(list_chr_df_coverage[[i]], file.path(DIR_CHROM, paste0("PQLseq_Input_Coverage_", i , ".RDS"))))
 
 
