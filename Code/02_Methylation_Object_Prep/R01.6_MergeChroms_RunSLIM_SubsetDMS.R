@@ -226,23 +226,33 @@ slim_output$qvalue <- qvals
 
 ###### Checks ######
 
-# How many pass cut off?
-sum(slim_output$pvalue < 0.01) # 32141
-sum(slim_output$qvalue < 0.01) # 4330
-sum(slim_output$pvalue < 0.01)/nrow(slim_output)*100 # 1.175787%
-sum(slim_output$qvalue < 0.01)/nrow(slim_output)*100 # 0.1584007%
+# How many failed to converge?
+nrow(slim_output[slim_output$converged == "FALSE",]) # 10,875 sites
+nrow(slim_output[slim_output$qvalue == 0,]) # 1727 sites
+nrow(slim_output[slim_output$qvalue == 0 & slim_output$converged == "FALSE",]) # 1727 sites
+# -> All sites that are q=0 also failed to converge -> represent algorithm failure and should be removed
+
+# How many have NaN in sig rows?
+q0.05 <- slim_output[slim_output$qvalue < 0.05,] # 4711 sites
+nrow(q0.05[q0.05$h2 == "NaN",]) # 94 sites
+# How many failed to converge in sig rows?
+nrow(q0.05[q0.05$converged == "FALSE",]) # 4426 sites
+# How many have q=0 in sig rows
+nrow(q0.05[q0.05$qvalue == 0,]) # 1727 sites
+nrow(q0.05[q0.05$qvalue == 0 & q0.05$converged == "FALSE",]) # 1727 sites
 
 # Summary
+slim_output <- slim_output[slim_output$converged == "TRUE",] # 2,722,698 sites left
 summary(slim_output$qvalue)
-# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-# 0.0000  0.9984  0.9984  0.9902  0.9984  0.9984 
+# Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+# 0.0000817 0.9984423 0.9984423 0.9919617 0.9984423 0.9984423 
 
+# Histogram
 hist(slim_output$pvalue)
 hist(slim_output$qvalue)
 
 # Save
 saveRDS(slim_output, file.path(PQL_DIR, "PQLseq_Fit_SLIM_Corrected_Whole_Genome.RDS"))
-
 
 ########################################################################################################################################
 
@@ -266,6 +276,7 @@ methdiff_df <- as.data.frame(getData(methdiff)) # Turn methylDiff object into a 
 class(methdiff_df)
 methdiff_df <- methdiff_df %>% dplyr::select( -pvalue, -qvalue) # Subset for 1st 4 columns
 methdiff_df$siteloc <- paste(methdiff_df$chr, methdiff_df$start, sep = ".") # Add genomic location column
+rownames(methdiff) <- methdiff_df$siteloc # Add row names
 
 ### Prep SLIM output ###
 slim_output$siteloc <- rownames(slim_output)  # Add genomic location column
@@ -283,8 +294,15 @@ identical(rownames(methdiff_df), rownames(slim_output_reorder)) # Check: TRUE
 merged_df <- add_column(methdiff_df, pvalue = slim_output_reorder$pvalue, .before = "meth.diff")
 merged_df <- add_column(merged_df, qvalue = slim_output_reorder$qvalue, .before = "meth.diff")
 
-# Remove siteloc
+# Filter out sites that did not converge from slim_output
+merged_df$converged <- slim_output_reorder$converged # Add converged col
+merged_df <- merged_df[merged_df$converged == "TRUE",] # Filter out FALSE
+nrow(merged_df[merged_df$qvalue == "0",]) # Check if any q=0 values left: 0, all good
+
+# Remove extra columns
 merged_df$siteloc <- NULL
+merged_df$converged <- NULL
+head(merged_df)
 
 ### Convert back into methylDiff object by adding metadata ###
 new_methdiff <- new(Class = "methylDiff", merged_df,
@@ -307,17 +325,7 @@ saveRDS(new_methdiff, file.path(MDIFF_DIR, "EvolApps_WholeGenome_ALL_MethDiff_fi
 ###### Subset DMS #######
 #########################
 
-new_methdiff <- readRDS(file.path(MDIFF_DIR, "EvolApps_WholeGenome_ALL_MethDiff_filt_CtoT_Intersect_PQLseq.RDS")) # PQLSeq
-methdiff <- readRDS(file.path(MDIFF_DIR, "EvolApps_WholeGenome_ALL_MethDiff_CovarMat_filt_CtoT_Intersect.RDS")) # methylKit, to compare against
-
-PQL_DMS_10pc_q0.05 = getMethylDiff(new_methdiff, difference=10, qvalue=0.05)
-
-# Filter out all q=0 sites from uniteCov object
-# These are excluded after visual exploration, as they represent non-meaningful values where PQLseq algorithm has likely failed
-# at methylation boundaries of 0 and 1. NB. Checked results with DSS, as it uses arcsine function to better deal with this. Confirmed
-# that q=0 values from PQLseq are non meaningful, and would have been filtered out anyway in DSS with high p value
-PQL_DMS_10pc_q0.05_no0q <- as.data.frame(getData(PQL_DMS_10pc_q0.05))
-PQL_DMS_10pc_q0.05_no0q <- PQL_DMS_10pc_q0.05_no0q[PQL_DMS_10pc_q0.05_no0q$qvalue > 0,] # 287 DMS
+PQL_DMS_10pc_q0.05_no0q = getMethylDiff(new_methdiff, difference=10, qvalue=0.05)
 saveRDS(PQL_DMS_10pc_q0.05_no0q, file.path(DMS_DIR, "EvolApps_WholeGenome_ALL_DMS_PQLseq_10pc_q0.05_no0q.RDS"))
 
 ###### Create uniteCovDM file for DMS ######
