@@ -41,6 +41,14 @@ DATADIR <- file.path(DIR, "Data/Fitness_Analysis")
 DATAOUT <- file.path(DATADIR, "Revised_Output" )
 PLOTOUTDIR <- file.path(DIR, "Figures"); dir.create(PLOTOUTDIR, showWarnings = F)
 
+# # In local
+# DATADIR <- "/Users/ecyen/Dropbox/Documents/PhD/Project/02_Output/02_Output_Evol_Apps/Scripts/Meth_vs_Fitness"
+# DATAOUT <- "/Users/ecyen/Dropbox/Documents/PhD/Project/02_Output/02_Output_Evol_Apps/Scripts/Meth_vs_Fitness"
+
+## for plotting
+# colours are 
+# #0D0887 for deep
+# #FA9E3B for shallow 
 mycols = c("#0D0887", "#FA9E3B")
 
 ### Read and process data
@@ -171,32 +179,32 @@ for ( col_index in COL_IDX ) {
                                                                                   R2_random = R2_random_int)
     
     
-    # Create a scatter plot with a smoothed line using ggplot2 for INTERACTION
-    plot <- ggplot(df_hatchling_DMS, aes(x = variable, y = df_hatchling_DMS[ , fitness_trait ],
-                             color=Treatment
-    )) +
-      geom_point() +
-      geom_smooth(method = "lm")+
-      theme_bw() +
-      theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
-      labs(x=paste0( "DNA Methylation at site ", variable_name, " (%)"),
-           y= fitness_trait_lab ) +
-      theme(text = element_text(size = 15))+
-      scale_color_manual(values=mycols)
+    # # Create a scatter plot with a smoothed line using ggplot2 for INTERACTION
+    # plot <- ggplot(df_hatchling_DMS, aes(x = variable, y = df_hatchling_DMS[ , fitness_trait ],
+    #                          color=Treatment
+    # )) +
+    #   geom_point() +
+    #   geom_smooth(method = "lm")+
+    #   theme_bw() +
+    #   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+    #   labs(x=paste0( "DNA Methylation at site ", variable_name, " (%)"),
+    #        y= fitness_trait_lab ) +
+    #   theme(text = element_text(size = 15))+
+    #   scale_color_manual(values=mycols)
+    # 
+    # # Print the plot
+    # # print(plot)
+    # 
+    # #### Save list of plots to file
+    # ggsave(
+    #   filename = file.path(PLOTOUTDIR, "PQLseq_DMS", paste0( "p_", interaction_p, "_", variable_name, "_", fitness_trait, "_interaction.pdf")),
+    #   plot = plot,
+    #   height = 10,
+    #   width = 10,
+    #   units = "in"
+    # )
 
-    # Print the plot
-    # print(plot)
-
-    #### Save list of plots to file
-    ggsave(
-      filename = file.path(PLOTOUTDIR, "PQLseq_DMS", paste0( "p_", interaction_p, "_", variable_name, "_", fitness_trait, "_interaction.pdf")),
-      plot = plot,
-      height = 10,
-      width = 10,
-      units = "in"
-    )
-
-    List_fitness_DMS_plots[[ paste0( variable_name, "_", fitness_trait, "_interaction"  )]] = plot
+    # List_fitness_DMS_plots[[ paste0( variable_name, "_", fitness_trait, "_interaction"  )]] = plot
     
     ####################################
     ##### STATS FOR additive model #####
@@ -224,35 +232,35 @@ for ( col_index in COL_IDX ) {
                                                                                                 R2_fixed = R2_fixed_add,
                                                                                                 R2_random = R2_random_add)
     
-    ### stat_smooth plots the interaction but for the additive model we colour points by group
-    ### but include a single line representing overall slope
-    gradient = model_add@beta[ 2 ] # betas are coefficients and the 2nd is DMS in our model
-    # note the points and line are specified differently because we want points by Treatment but line is combined
-    plot_add <- ggplot(df_hatchling_DMS) +
-      geom_point(aes(x = variable, y = df_hatchling_DMS[ , fitness_trait ],
-                     colour = Treatment)) +
-      geom_smooth(aes(x = variable, y = df_hatchling_DMS[ , fitness_trait ]),
-                  method = "lm", colour = "black") +
-      theme_bw() +
-      theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
-      labs(x=paste0( "DNA Methylation at site ", variable_name, " (%)"),
-           y= fitness_trait_lab ) +
-      theme(text = element_text(size = 15))+
-      scale_color_manual(values=mycols)
+    # ### stat_smooth plots the interaction but for the additive model we colour points by group
+    # ### but include a single line representing overall slope
+    # gradient = model_add@beta[ 2 ] # betas are coefficients and the 2nd is DMS in our model
+    # # note the points and line are specified differently because we want points by Treatment but line is combined
+    # plot_add <- ggplot(df_hatchling_DMS) +
+    #   geom_point(aes(x = variable, y = df_hatchling_DMS[ , fitness_trait ],
+    #                  colour = Treatment)) +
+    #   geom_smooth(aes(x = variable, y = df_hatchling_DMS[ , fitness_trait ]),
+    #               method = "lm", colour = "black") +
+    #   theme_bw() +
+    #   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+    #   labs(x=paste0( "DNA Methylation at site ", variable_name, " (%)"),
+    #        y= fitness_trait_lab ) +
+    #   theme(text = element_text(size = 15))+
+    #   scale_color_manual(values=mycols)
+    # 
+    # # Print the plot
+    # # print(plot)
+    # 
+    # #### Save list of plots to file
+    # ggsave(
+    #   filename = file.path(PLOTOUTDIR, "PQLseq_DMS", paste0( "p_", additive_p, "_", variable_name, "_", fitness_trait, "_additive.pdf")),
+    #   plot = plot_add,
+    #   height = 10,
+    #   width = 10,
+    #   units = "in"
+    # )
 
-    # Print the plot
-    # print(plot)
-
-    #### Save list of plots to file
-    ggsave(
-      filename = file.path(PLOTOUTDIR, "PQLseq_DMS", paste0( "p_", additive_p, "_", variable_name, "_", fitness_trait, "_additive.pdf")),
-      plot = plot_add,
-      height = 10,
-      width = 10,
-      units = "in"
-    )
-
-    List_fitness_DMS_plots[[ paste0( variable_name, "_", fitness_trait, "_additive"  )]] = plot_add
+    # List_fitness_DMS_plots[[ paste0( variable_name, "_", fitness_trait, "_additive"  )]] = plot_add
     
   }
 }
@@ -324,31 +332,39 @@ for ( i in IDX_p_lt_adj_alpha) {
 ### end of script
 
 
-### Post hoc tests for significant interactions ###
+###### Post hoc tests of significant interactions #######
 
-# RALYL
+### RALYL ###
 model1 <- List_fitness_DMS_models$RALYL_SCL_mm_interaction
+emmip(model1, Treatment ~ variable, cov.reduce = range) # Visualise fitted lines
+lstrends(model1, ~ Treatment, var="variable") # lstrends to estimate and compare average slopes of fitted lines per treatment
 
-# Visualise fitted lines
-emmip(model1, variable ~ Treatment, cov.reduce = range)
+# Post hoc: test if slopes are sig different from 0 in each treatment
+deep <- df_hatchling_DMS[df_hatchling_DMS$Treatment == "Deep",]
+shallow <- df_hatchling_DMS[df_hatchling_DMS$Treatment == "Shallow",]
 
-# Summary of contrasts at max and min of range, by treatment
-# cov.reduce required for continuous variable
-emm <- emmeans(model1, pairwise ~ variable * Treatment, cov.reduce = range)
-pairs(emm, simple = "Treatment")
+model_deep = lmer(deep$SCL_mm ~ deep$RALYL + (1 | factor(deep$Maternal_ID)))
+anova(model_deep)
 
+model_shallow = lmer(shallow$SCL_mm ~ shallow$RALYL + (1 | factor(shallow$Maternal_ID)))
+anova(model_shallow)
 
-# TMEM273
+### TMEM273 ###
 model1 <- List_fitness_DMS_models$TMEM273_Run_average_interaction
-
-# Visualise fitted lines
-emmip(model1, variable ~ Treatment, cov.reduce = range)
+emmip(model1, Treatment ~ variable, cov.reduce = range) # Visualise fitted lines
+lstrends(model1, ~ Treatment, var="variable") # lstrends to estimate and compare average slopes of fitted lines per treatment
 
 # Summary of contrasts at max and min of range, by treatment
 # cov.reduce required for continuous variable
 emm <- emmeans(model1, pairwise ~ variable * Treatment, cov.reduce = range)
 pairs(emm, simple = "Treatment")
 
+# Post hoc: test if slopes are sig different from 0 in each treatment
+model_deep = lmer(deep$SCL_mm ~ deep$TMEM273 + (1 | factor(deep$Maternal_ID)))
+anova(model_deep)
+
+model_shallow = lmer(shallow$SCL_mm ~ shallow$TMEM273 + (1 | factor(shallow$Maternal_ID)))
+anova(model_shallow)
 
 
 
