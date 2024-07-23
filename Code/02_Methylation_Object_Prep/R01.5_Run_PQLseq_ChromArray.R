@@ -11,6 +11,13 @@
 # Manual: https://cran.hafro.is/web/packages/PQLseq/PQLseq.pdf 
 # Paper: https://academic.oup.com/bioinformatics/article/35/3/487/5055584 
 
+# NB. Changes required to prevent this package from setting off ITS alarms for using too many cores
+# Solution provided by Sam Lawson @ ITS, 22/07/2024:
+# Edit the PQLseq function: Change to FORKING mode: cl <- makeCluster(numCore, type = "FORK", outfile = "par_log.txt")
+# Add to the top of this R script:
+# 1) Add Sys.setenv(MKL_NUM_THREADS = 1)
+# 2) Install RhpcBLASctl and run library(RhpcBLASctl); blas_set_num_threads(1); omp_set_num_threads(1)
+
 ########################################################################################################################################
 
 ###############################
@@ -24,6 +31,13 @@ library(Rcpp)
 library(RcppArmadillo)
 library(PQLseq)
 library(tidyverse)
+library(RhpcBLASctl) # To deal with alarming nodes issue
+
+####### Set multi-threading parameters to avoid alarming nodes ######
+
+Sys.setenv(MKL_NUM_THREADS = 1)
+blas_set_num_threads(1)
+omp_set_num_threads(1)
 
 ####### Set directories ######
 
@@ -43,23 +57,17 @@ print("Arg1 and Arg2:")
 print(args)
 chr = as.numeric(args[1])-1
 
-# NB. Not used for PQLSeq, as hard coded as 6 in custom function to avoid detectCores() issue
-# Set number of cores available (= 2nd argument ${NSLOTS} in parent bash script)
-Num_cores = args[2]
-
-
 ####### Load custom function ######
 
-# The original package function uses detectCores() to set no. of cores to parallelise by
-# This caused job to take use too many cores and set off ITS node alarms, as it ignores how many cores you set as NSLOTS
-# Solution for now: load in custom function with no. of cores hard coded
-
+# Required to prevent over-threading
+# Also altered package code to auto-detect no. of cores to use with nslots -> don't need to supply as additional argument
 source("/data/SBCS-EizaguirreLab/Turtle_WGBS/00_Scripts/Functions/Custom_PQLseq_Function.R")
 
 # Set up environment for custom function: 
 # https://stackoverflow.com/questions/24331690/modify-package-function
 environment(custom_pqlseq) <- asNamespace('PQLseq')
 assignInNamespace("pqlseq", custom_pqlseq, ns = "PQLseq")
+
 
 start_time <- Sys.time()
 print(paste0("##### Starting chromosome ", chr, " at ", Sys.time(), " #####")) 
