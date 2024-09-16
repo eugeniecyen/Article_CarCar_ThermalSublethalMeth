@@ -6,7 +6,7 @@ This repository contains scripts and data used for the research article:
 
 Authors: Eugenie C. Yen, James D. Gilbert, Alice Balard, Inês O. Afonso, Kirsten Fairweather, Débora Newlands, Artur Lopes, Sandra M. Correia, Albert Taxonera, Stephen J. Rossiter, José M. Martín-Durán, Christophe Eizaguirre
 
-Preprint: https://doi.org/10.1101/2023.11.22.568239
+http://dx.doi.org/10.1111/eva.70013 
 
 Raw sequencing reads are available on ENA under study accession PRJEB75968
 <br/><br/>
